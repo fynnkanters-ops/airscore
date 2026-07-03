@@ -30,6 +30,8 @@ jobs:
       - run: npm run build
         env:
           NEXT_PUBLIC_BASE_PATH: ${{ vars.NEXT_PUBLIC_BASE_PATH || '/airscore' }}
+          # Optional: URL des Vercel-Proxys (Listing-Import + News). Leer = Fallbacks.
+          NEXT_PUBLIC_PROXY_BASE: ${{ vars.NEXT_PUBLIC_PROXY_BASE }}
       - uses: actions/upload-pages-artifact@v3
         with:
           path: out

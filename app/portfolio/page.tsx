@@ -51,14 +51,7 @@ export default function PortfolioPage() {
     : null;
 
   return (
-    <main className="min-h-screen flex flex-col">
-      <header style={{ background: 'var(--primary)', color: 'white' }} className="px-6 py-4">
-        <div className="max-w-3xl mx-auto flex items-center justify-between">
-          <button onClick={() => router.push('/')} className="font-bold text-xl">AirScore</button>
-          <button onClick={() => router.push('/')} style={{ opacity: 0.85, fontSize: '0.85rem' }}>+ Neue Analyse</button>
-        </div>
-      </header>
-
+    <div className="flex flex-col">
       <div className="max-w-3xl mx-auto w-full px-4 py-6">
         <h1 className="text-2xl font-bold mb-1">📁 Mein Portfolio</h1>
         <p style={{ color: 'var(--muted-fg)' }} className="text-sm mb-6">
@@ -158,7 +151,7 @@ export default function PortfolioPage() {
                       </button>
                       <button onClick={() => handleRemove(e.id)}
                         className="px-3 py-1.5 rounded-lg border text-sm font-medium"
-                        style={{ border: '1px solid var(--border)', background: 'white', color: '#dc2626' }}>
+                        style={{ border: '1px solid var(--border)', background: 'var(--card)', color: '#dc2626' }}>
                         Entfernen
                       </button>
                     </div>
@@ -169,6 +162,6 @@ export default function PortfolioPage() {
           </>
         )}
       </div>
-    </main>
+    </div>
   );
 }

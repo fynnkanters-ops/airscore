@@ -31,23 +31,35 @@ app/
   analyze/page.tsx    Analyse-Pipeline + Ergebnisbericht
   portfolio/page.tsx  Gespeicherte Objekte
   layout.tsx          PWA-Meta + Service-Worker-Registrierung
+app/rechner/
+  page.tsx            Option 2: Segmented-Control (Mietwert/Finanzierung/Import)
+  prefill.ts          gemeinsame Import-Vorbefüllung
 lib/
   types.ts            Zentrale Typen (eine Quelle der Wahrheit)
   nominatim.ts        Geocoding/Adresssuche
   overpass.ts         POI-Suche (mehrere Endpunkte, Fallback)
   citydata.ts         Stadttyp-Erkennung, Preisbasis, Rechtshinweise
-  calculations.ts     Umsatz/Kosten/Break-even
+  calculations.ts     Umsatz/Kosten/Break-even (Airbnb)
   scoring.ts          Score-Engine (6 Kategorien)
   storage.ts          Portfolio (localStorage)
+  mietwert.ts         Mietwert-Score (gewichtet) → Kaltmiete-Spanne
+  mietspiegel.ts      PLZ-Tabelle (€/m²-Richtwerte, editierbar/datiert)
+  financing.ts        Annuität, Grunderwerbsteuer je Bundesland, Nebenkosten
+  afa.ts              AfA linear/degressiv/§7b + Cashflow n. Steuern
+  listing.ts          Listing-Import (ruft Proxy, Fallback null)
+  news.ts             News-Feed (Proxy oder Mock)
   analysis/           Berichts-Provider (siehe unten)
-    provider.ts         Interface
-    localProvider.ts    regelbasiert (Default, kein Key)
-    claudeProvider.ts   externes Backend/Claude
-    index.ts            Auswahl + Fallback
 components/
+  TopBar.tsx, BottomNav.tsx, ThemeToggle.tsx  App-Chrome (in layout.tsx)
+  NewsBell.tsx        Glocke + Slide-in-Panel
+  Disclaimer.tsx      Pflicht-Hinweis-Box
+  rechner/            Field-Helfer + MietwertCalc/FinanzierungCalc/ImportBox
   PWARegister.tsx     Service-Worker-Registrierung
 public/
   manifest.json, sw.js, icons/   PWA-Assets
+proxy/                OPTIONALER Vercel-Serverless-Proxy (eigenes Projekt, Root=proxy/)
+  api/listing.js      OG/JSON-LD-Parser für Listing-Import
+  api/news.js         RSS-Aggregation
 server-examples/
   analyze-route.ts    OPTIONALES Claude-Backend (nicht im statischen Build)
 scripts/

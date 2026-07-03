@@ -2,6 +2,8 @@ import type { Metadata, Viewport } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { PWARegister } from "@/components/PWARegister";
+import { TopBar } from "@/components/TopBar";
+import { BottomNav } from "@/components/BottomNav";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -19,9 +21,9 @@ const BASE = process.env.NODE_ENV === "production"
   : "";
 
 export const metadata: Metadata = {
-  title: "AirScore — Airbnb-Objekte bewerten",
+  title: "AirScore — Immobilien bewerten & rechnen",
   description:
-    "Bewerte Wohnungen & Apartments für Airbnb/Kurzzeitvermietung: Standort, Nachfrage, Finanzen, Score – ohne Login, direkt im Browser.",
+    "Airbnb-Objekte bewerten, Mietwert schätzen, Baufinanzierung & AfA berechnen. Ohne Login, direkt im Browser.",
   manifest: `${BASE}/manifest.json`,
   appleWebApp: { capable: true, title: "AirScore", statusBarStyle: "default" },
   icons: {
@@ -31,10 +33,13 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: "#0369a1",
+  themeColor: "#0a0a0b",
   width: "device-width",
   initialScale: 1,
 };
+
+// Anti-FOUC: Theme vor dem ersten Paint setzen (gespeichert oder System).
+const themeScript = `try{var t=localStorage.getItem('airscore-theme');if(t==='dark'||(!t&&window.matchMedia&&window.matchMedia('(prefers-color-scheme:dark)').matches)){document.documentElement.setAttribute('data-theme','dark');}}catch(e){}`;
 
 export default function RootLayout({
   children,
@@ -47,7 +52,12 @@ export default function RootLayout({
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col">
-        {children}
+        <script dangerouslySetInnerHTML={{ __html: themeScript }} />
+        <TopBar />
+        <main className="flex-1" style={{ paddingBottom: "calc(var(--nav-h) + 8px)" }}>
+          {children}
+        </main>
+        <BottomNav />
         <PWARegister />
       </body>
     </html>

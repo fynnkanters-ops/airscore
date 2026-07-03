@@ -6,6 +6,12 @@
       "runtimeExecutable": "npm",
       "runtimeArgs": ["run", "dev"],
       "port": 3000
+    },
+    {
+      "name": "airscore-preview",
+      "runtimeExecutable": "node",
+      "runtimeArgs": ["scripts/serve-test.mjs"],
+      "port": 4173
     }
   ]
 }

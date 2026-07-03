@@ -139,26 +139,18 @@ export default function HomePage() {
   }
 
   return (
-    <main className="min-h-screen flex flex-col">
-      <header style={{ background: 'var(--primary)', color: 'white' }} className="px-6 py-4">
-        <div className="max-w-3xl mx-auto flex items-center justify-between">
-          <div className="flex items-center gap-3">
-            <span className="text-2xl font-bold tracking-tight">AirScore</span>
-            <span style={{ opacity: 0.7, fontSize: '0.85rem' }}>Airbnb-Objekte bewerten</span>
-          </div>
-          <button onClick={() => router.push('/portfolio')} style={{ opacity: 0.9, fontSize: '0.9rem' }}>
-            📁 Portfolio
-          </button>
-        </div>
-      </header>
-
-      <section style={{ background: 'var(--primary-light)' }} className="px-6 py-10 text-center">
+    <div className="flex flex-col">
+      <section className="px-6 py-12 text-center animate-rise">
         <div className="max-w-2xl mx-auto">
-          <h1 className="text-3xl font-bold mb-3" style={{ color: 'var(--primary)' }}>
+          <div className="inline-block px-3 py-1 mb-4 rounded-full text-xs font-semibold"
+            style={{ background: 'var(--accent-soft)', color: 'var(--accent)' }}>
+            Airbnb-Analyse
+          </div>
+          <h1 className="text-4xl font-bold mb-3 tracking-tight">
             Gib eine Adresse ein.<br />Bekomm eine klare Antwort.
           </h1>
           <p style={{ color: 'var(--muted-fg)' }} className="text-lg">
-            KI-gestützte Analyse für Airbnb-Objekte — Standort, Nachfrage, Finanzen, Risiken.
+            Analyse für Kurzzeitvermietung — Standort, Nachfrage, Finanzen, Risiken.
           </p>
         </div>
       </section>
@@ -186,13 +178,15 @@ export default function HomePage() {
                 <div style={{ color: 'var(--muted-fg)', fontSize: '0.8rem' }} className="mt-1">Suche…</div>
               )}
               {showSuggestions && suggestions.length > 0 && (
-                <div className="absolute z-50 w-full mt-1 rounded-lg shadow-lg overflow-hidden" style={{ background: 'white', border: '1px solid var(--border)' }}>
+                <div className="absolute z-50 w-full mt-1 rounded-lg shadow-lg overflow-hidden" style={{ background: 'var(--card)', border: '1px solid var(--border)' }}>
                   {suggestions.map((s) => {
                     const prec = PRECISION_LABELS[precisionOf(s)];
                     return (
                       <button key={s.place_id} type="button"
-                        className="w-full text-left px-4 py-2.5 text-sm hover:bg-slate-50 flex items-center justify-between gap-2"
+                        className="w-full text-left px-4 py-2.5 text-sm flex items-center justify-between gap-2 transition"
                         style={{ borderBottom: '1px solid var(--border)' }}
+                        onMouseEnter={(e) => (e.currentTarget.style.background = 'var(--muted)')}
+                        onMouseLeave={(e) => (e.currentTarget.style.background = 'transparent')}
                         onClick={() => selectSuggestion(s)}
                       >
                         <span className="flex-1">{shortLabel(s)}</span>
@@ -284,21 +278,19 @@ export default function HomePage() {
               { icon: '📊', title: 'Finanzen', desc: 'Umsatz, Kosten, Break-even' },
               { icon: '⚖️', title: 'Rechtliches', desc: 'Risiken & Genehmigungen' },
             ].map((f) => (
-              <div key={f.title} className="text-center p-4 rounded-lg" style={{ background: 'white', border: '1px solid var(--border)' }}>
+              <div key={f.title} className="card card-hover text-center" style={{ padding: '1rem' }}>
                 <div className="text-2xl mb-1">{f.icon}</div>
                 <div className="text-sm font-semibold">{f.title}</div>
                 <div style={{ color: 'var(--muted-fg)', fontSize: '0.75rem' }}>{f.desc}</div>
               </div>
             ))}
           </div>
+
+          <p className="text-center mt-8" style={{ color: 'var(--muted-fg)', fontSize: '0.78rem' }}>
+            AirScore ist kein Rechtsberater. Alle Angaben ohne Gewähr. Immer schriftliche Vermieter-Erlaubnis einholen.
+          </p>
         </div>
       </section>
-
-      <footer style={{ background: 'var(--muted)', borderTop: '1px solid var(--border)' }} className="px-6 py-4 text-center">
-        <span style={{ color: 'var(--muted-fg)', fontSize: '0.78rem' }}>
-          AirScore ist kein Rechtsberater. Alle Angaben ohne Gewähr. Immer schriftliche Vermieter-Erlaubnis einholen.
-        </span>
-      </footer>
-    </main>
+    </div>
   );
 }

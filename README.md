@@ -3,13 +3,25 @@
 **Gib eine Adresse ein. Bekomm eine klare Antwort.**
 KI-/regelgestütztes Tool zur Bewertung von Wohnungen & Apartments für Airbnb-/Kurzzeitvermietung: Standortqualität, Nachfrage, Wettbewerb, Finanzen und ein Score von 0–100 mit klarer Empfehlung.
 
+## Zwei Bereiche
+
+- **Analyse** – Airbnb-/Kurzzeitvermietung: Standort, Nachfrage, Wettbewerb, Finanzen, Score 0–100.
+- **Rechner** – Vermietung & Finanzierung:
+  - **Mietwert-Score** – grobe ortsübliche Kaltmiete aus gewichtetem Score + PLZ-Mietspiegel-Richtwert.
+  - **Baufinanzierung + AfA** – Annuitätendarlehen, Tilgungsplan, Kaufnebenkosten (Grunderwerbsteuer je Bundesland), lineare/degressive/§7b-Abschreibung, Cashflow nach Steuern.
+  - **Listing-Import** – Link einfügen → Felder vorausgefüllt (via Proxy, mit manuellem Fallback).
+
 ## Highlights
 
-- ✅ **Kein API-Key nötig** – Berichte erzeugt eine lokale Engine im Browser.
+- ✅ **Kein API-Key nötig** – Analyse-Berichte & alle Rechner laufen im Browser.
 - 🌍 **Online-Suche** – Adresssuche (Nominatim) & POIs (Overpass) live aus OpenStreetMap, kostenlos & ohne Key.
+- 🌗 **Dark Mode** + modernes, mobiles UI mit Bottom-Navigation.
+- 🔔 **News-Widget** – dezente Meldungen zu Kurzzeitvermietung & Mietrecht (RSS via Proxy, Mock-Fallback).
 - 📱 **Als App installierbar** – PWA: auf dem Handy zum Homescreen hinzufügen.
 - 📁 **Portfolio** – interessante Objekte speichern, vergleichen, mit Notizen versehen.
-- 🔌 **Erweiterbar** – optional eigenes Backend/Claude über eine konfigurierbare API anbinden (siehe `ARCHITECTURE.md`).
+- 🔌 **Erweiterbar** – optionaler Vercel-Proxy (`proxy/`) für Listing-Import & News; optional eigenes Backend/Claude (siehe `ARCHITECTURE.md`).
+
+> **Wichtig:** Mietwert-, Finanzierungs- und AfA-Ergebnisse sind **Richtwerte, keine Rechts-, Steuer- oder Finanzberatung**. Sätze/Zinsen sind editierbare, datierte Defaults.
 
 ## Schnellstart (lokal)
 

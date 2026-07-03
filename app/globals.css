@@ -1,14 +1,52 @@
 @import "tailwindcss";
 
+/* ============================================================
+   Design-Tokens — Light (Default)
+   Bestehende Variablennamen bleiben erhalten (Inline-Styles der
+   Seiten referenzieren sie), Dark Mode überschreibt sie unten.
+   ============================================================ */
 :root {
-  --background: #f8fafc;
-  --foreground: #0f172a;
+  --background: #fafafa;
+  --foreground: #18181b;
   --card: #ffffff;
-  --border: #e2e8f0;
-  --muted: #f1f5f9;
-  --muted-fg: #64748b;
-  --primary: #0369a1;
-  --primary-light: #e0f2fe;
+  --border: #e4e4e7;
+  --muted: #f4f4f5;
+  --muted-fg: #71717a;
+  --primary: #2563eb;
+  --primary-light: #eff6ff;
+  --accent: #2563eb;
+  --accent-soft: #eff6ff;
+
+  --radius: 1rem;
+  --radius-sm: 0.625rem;
+  --radius-lg: 1.5rem;
+
+  --shadow-sm: 0 1px 2px rgba(24, 24, 27, 0.05), 0 1px 3px rgba(24, 24, 27, 0.06);
+  --shadow-md: 0 4px 12px rgba(24, 24, 27, 0.08), 0 2px 4px rgba(24, 24, 27, 0.04);
+  --shadow-lg: 0 12px 32px rgba(24, 24, 27, 0.12);
+
+  --ease: cubic-bezier(0.16, 1, 0.3, 1);
+  --t-fast: 160ms var(--ease);
+  --t: 240ms var(--ease);
+
+  --nav-h: 64px;
+}
+
+[data-theme="dark"] {
+  --background: #0a0a0b;
+  --foreground: #f4f4f5;
+  --card: #161618;
+  --border: #29292e;
+  --muted: #1f1f23;
+  --muted-fg: #a1a1aa;
+  --primary: #3b82f6;
+  --primary-light: #172554;
+  --accent: #3b82f6;
+  --accent-soft: #172554;
+
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.4);
+  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.45);
+  --shadow-lg: 0 12px 32px rgba(0, 0, 0, 0.55);
 }
 
 @theme inline {
@@ -18,45 +56,79 @@
   --font-mono: var(--font-geist-mono);
 }
 
+* {
+  border-color: var(--border);
+}
+
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: var(--font-geist-sans), Arial, Helvetica, sans-serif;
+  font-family: var(--font-geist-sans), -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif;
+  transition: background var(--t-fast), color var(--t-fast);
+  -webkit-font-smoothing: antialiased;
 }
 
+/* ============================================================
+   Bausteine
+   ============================================================ */
 .card {
   background: var(--card);
   border: 1px solid var(--border);
-  border-radius: 0.75rem;
+  border-radius: var(--radius);
   padding: 1.5rem;
+  box-shadow: var(--shadow-sm);
+  transition: box-shadow var(--t), transform var(--t), border-color var(--t);
+}
+.card-hover:hover {
+  box-shadow: var(--shadow-md);
+  transform: translateY(-2px);
 }
 
 .btn-primary {
-  background: var(--primary);
-  color: white;
-  border-radius: 0.5rem;
-  padding: 0.625rem 1.25rem;
+  background: var(--accent);
+  color: #ffffff;
+  border-radius: var(--radius-sm);
+  padding: 0.7rem 1.35rem;
   font-weight: 600;
   cursor: pointer;
-  transition: opacity 0.15s;
+  border: none;
+  transition: transform var(--t-fast), box-shadow var(--t-fast), opacity var(--t-fast);
+  box-shadow: var(--shadow-sm);
 }
-.btn-primary:hover { opacity: 0.9; }
-.btn-primary:disabled { opacity: 0.5; cursor: not-allowed; }
+.btn-primary:hover { transform: translateY(-1px); box-shadow: var(--shadow-md); }
+.btn-primary:active { transform: translateY(0) scale(0.98); }
+.btn-primary:disabled { opacity: 0.5; cursor: not-allowed; transform: none; box-shadow: none; }
+
+.btn-ghost {
+  background: var(--muted);
+  color: var(--foreground);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 0.6rem 1.1rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background var(--t-fast), transform var(--t-fast);
+}
+.btn-ghost:hover { transform: translateY(-1px); }
 
 .input-field {
   width: 100%;
   border: 1px solid var(--border);
-  border-radius: 0.5rem;
-  padding: 0.625rem 0.875rem;
-  background: white;
+  border-radius: var(--radius-sm);
+  padding: 0.7rem 0.95rem;
+  background: var(--card);
+  color: var(--foreground);
   font-size: 0.95rem;
   outline: none;
-  transition: border-color 0.15s;
+  transition: border-color var(--t-fast), box-shadow var(--t-fast);
 }
-.input-field:focus { border-color: var(--primary); }
+.input-field:focus {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 18%, transparent);
+}
 
 .score-bar-bg {
-  background: #e2e8f0;
+  background: var(--muted);
   border-radius: 9999px;
   height: 8px;
   overflow: hidden;
@@ -64,5 +136,104 @@ body {
 .score-bar-fill {
   height: 100%;
   border-radius: 9999px;
-  transition: width 0.8s ease;
+  transition: width 0.8s var(--ease);
+}
+
+/* Segmented control (Rechner-Tabs) */
+.segmented {
+  display: inline-flex;
+  background: var(--muted);
+  border: 1px solid var(--border);
+  border-radius: 9999px;
+  padding: 4px;
+  gap: 4px;
+}
+.segmented button {
+  border: none;
+  background: transparent;
+  color: var(--muted-fg);
+  padding: 0.5rem 1.1rem;
+  border-radius: 9999px;
+  font-weight: 600;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: background var(--t-fast), color var(--t-fast);
+}
+.segmented button[data-active="true"] {
+  background: var(--card);
+  color: var(--foreground);
+  box-shadow: var(--shadow-sm);
+}
+
+/* Bottom-Nav */
+.bottom-nav {
+  position: fixed;
+  bottom: 0; left: 0; right: 0;
+  height: var(--nav-h);
+  background: color-mix(in srgb, var(--card) 88%, transparent);
+  backdrop-filter: blur(14px);
+  border-top: 1px solid var(--border);
+  display: flex;
+  z-index: 40;
+}
+.bottom-nav a {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 3px;
+  color: var(--muted-fg);
+  font-size: 0.7rem;
+  font-weight: 600;
+  transition: color var(--t-fast);
+}
+.bottom-nav a[data-active="true"] { color: var(--accent); }
+
+/* Slide-in Panel (News) */
+.panel-overlay {
+  position: fixed; inset: 0;
+  background: rgba(0, 0, 0, 0.4);
+  z-index: 50;
+  animation: fade-in var(--t) forwards;
+}
+.panel-sheet {
+  position: fixed; top: 0; right: 0; bottom: 0;
+  width: min(420px, 90vw);
+  background: var(--card);
+  border-left: 1px solid var(--border);
+  z-index: 51;
+  box-shadow: var(--shadow-lg);
+  animation: slide-in-right var(--t) forwards;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Badge */
+.badge-dot {
+  position: absolute;
+  top: -4px; right: -4px;
+  min-width: 18px; height: 18px;
+  padding: 0 4px;
+  background: #ef4444;
+  color: #fff;
+  font-size: 0.65rem;
+  font-weight: 700;
+  border-radius: 9999px;
+  display: flex; align-items: center; justify-content: center;
+}
+
+/* ============================================================
+   Animationen
+   ============================================================ */
+@keyframes fade-in { from { opacity: 0; } to { opacity: 1; } }
+@keyframes slide-in-right { from { transform: translateX(100%); } to { transform: translateX(0); } }
+@keyframes rise {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.animate-rise { animation: rise var(--t) both; }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
 }

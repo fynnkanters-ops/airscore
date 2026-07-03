@@ -1,0 +1,8 @@
+{
+  "name": "airscore-proxy",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Serverless-Proxy (Vercel) für AirScore: Listing-Import + News-RSS. Kein API-Key.",
+  "engines": { "node": ">=18" }
+}

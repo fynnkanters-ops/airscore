@@ -247,14 +247,7 @@ function AnalyzeContent() {
     </div>
   );
 
-  if (!result) return (
-    <>
-      <header style={{ background: 'var(--primary)', color: 'white' }} className="px-6 py-4">
-        <div className="max-w-3xl mx-auto font-bold text-xl">AirScore</div>
-      </header>
-      <ProgressScreen step={step} />
-    </>
-  );
+  if (!result) return <ProgressScreen step={step} />;
 
   const { scores, finance, cityInfo, ai, location, input, pois } = result;
   const badge = recoBadge(ai?.recommendation ?? (scores.total >= 75 ? 'ja' : scores.total >= 55 ? 'pruefen' : 'nein'));
@@ -294,17 +287,7 @@ function AnalyzeContent() {
   }
 
   return (
-    <main className="min-h-screen flex flex-col">
-      <header style={{ background: 'var(--primary)', color: 'white' }} className="px-6 py-4">
-        <div className="max-w-3xl mx-auto flex items-center justify-between">
-          <button onClick={() => router.push('/')} className="font-bold text-xl">AirScore</button>
-          <div className="flex items-center gap-4">
-            <button onClick={() => router.push('/portfolio')} style={{ opacity: 0.85, fontSize: '0.85rem' }}>📁 Portfolio</button>
-            <button onClick={() => router.push('/')} style={{ opacity: 0.85, fontSize: '0.85rem' }}>← Neue Analyse</button>
-          </div>
-        </div>
-      </header>
-
+    <div className="flex flex-col">
       <div className="max-w-3xl mx-auto w-full px-4 py-6 flex flex-col gap-4">
 
         {poiWarning && (
@@ -625,25 +608,22 @@ function AnalyzeContent() {
             {saved ? '✓ Im Portfolio gespeichert' : '⭐ Zum Portfolio hinzufügen'}
           </button>
           <button onClick={() => router.push('/portfolio')}
-            className="px-5 py-2.5 rounded-lg border font-medium text-sm"
-            style={{ border: '1px solid var(--border)', background: 'white' }}>
+            className="btn-ghost text-sm">
             📁 Portfolio öffnen
           </button>
           <button onClick={() => router.push('/')}
-            className="px-5 py-2.5 rounded-lg border font-medium text-sm"
-            style={{ border: '1px solid var(--border)', background: 'white' }}>
+            className="btn-ghost text-sm">
             ← Neue Analyse
           </button>
           <button
             onClick={() => window.print()}
-            className="px-5 py-2.5 rounded-lg border font-medium text-sm"
-            style={{ border: '1px solid var(--border)', background: 'white' }}
+            className="btn-ghost text-sm"
           >
             🖨️ Drucken / PDF
           </button>
         </div>
       </div>
-    </main>
+    </div>
   );
 }
 
